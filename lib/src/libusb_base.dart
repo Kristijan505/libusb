@@ -1,6 +1,6 @@
 import 'dart:ffi';
 
-class Timeval extends Struct {
+final class Timeval extends Struct {
   @Long()
   external int tv_sec;
 
@@ -22,7 +22,7 @@ class Timeval extends Struct {
   Abi.windowsIA32: Int32(),
   Abi.windowsX64: Int32(),
 })
-class Susecond extends AbiSpecificInteger {
+final class Susecond extends AbiSpecificInteger {
   const Susecond();
 }
 
@@ -37,9 +37,9 @@ class Susecond extends AbiSpecificInteger {
   Abi.macosArm64: Int64(),
   Abi.macosX64: Int64(),
   Abi.windowsArm64: Int64(),
-  Abi.windowsIA32: Int64(),
+  Abi.windowsIA32: Int16(),
   Abi.windowsX64: Int64(),
 })
-class Ssize extends AbiSpecificInteger {
+final class Ssize extends AbiSpecificInteger {
   const Ssize();
 }

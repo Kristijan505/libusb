@@ -8,60 +8,50 @@ import 'libusb_base.dart' as pkg_libusb;
 class Libusb {
   /// Holds the symbol lookup function.
   final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-      _lookup;
+  _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
   Libusb(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
 
   /// The symbols are looked up with [lookup].
   Libusb.fromLookup(
-      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-          lookup)
-      : _lookup = lookup;
+    ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) lookup,
+  ) : _lookup = lookup;
 
-  int libusb_init(
-    ffi.Pointer<ffi.Pointer<libusb_context>> ctx,
-  ) {
-    return _libusb_init(
-      ctx,
-    );
+  int libusb_init(ffi.Pointer<ffi.Pointer<libusb_context>> ctx) {
+    return _libusb_init(ctx);
   }
 
-  late final _libusb_initPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<ffi.Pointer<libusb_context>>)>>('libusb_init');
+  late final _libusb_initPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<ffi.Pointer<libusb_context>>)
+        >
+      >('libusb_init');
   late final _libusb_init = _libusb_initPtr
       .asFunction<int Function(ffi.Pointer<ffi.Pointer<libusb_context>>)>();
 
-  void libusb_exit(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_exit(
-      ctx,
-    );
+  void libusb_exit(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_exit(ctx);
   }
 
-  late final _libusb_exitPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_exit');
-  late final _libusb_exit =
-      _libusb_exitPtr.asFunction<void Function(ffi.Pointer<libusb_context>)>();
+  late final _libusb_exitPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>
+      >('libusb_exit');
+  late final _libusb_exit = _libusb_exitPtr
+      .asFunction<void Function(ffi.Pointer<libusb_context>)>();
 
-  void libusb_set_debug(
-    ffi.Pointer<libusb_context> ctx,
-    int level,
-  ) {
-    return _libusb_set_debug(
-      ctx,
-      level,
-    );
+  void libusb_set_debug(ffi.Pointer<libusb_context> ctx, int level) {
+    return _libusb_set_debug(ctx, level);
   }
 
-  late final _libusb_set_debugPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<libusb_context>, ffi.Int)>>('libusb_set_debug');
+  late final _libusb_set_debugPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<libusb_context>, ffi.Int)
+        >
+      >('libusb_set_debug');
   late final _libusb_set_debug = _libusb_set_debugPtr
       .asFunction<void Function(ffi.Pointer<libusb_context>, int)>();
 
@@ -70,19 +60,19 @@ class Libusb {
     libusb_log_cb cb,
     int mode,
   ) {
-    return _libusb_set_log_cb(
-      ctx,
-      cb,
-      mode,
-    );
+    return _libusb_set_log_cb(ctx, cb, mode);
   }
 
-  late final _libusb_set_log_cbPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<libusb_context>, libusb_log_cb,
-              ffi.Int)>>('libusb_set_log_cb');
-  late final _libusb_set_log_cb = _libusb_set_log_cbPtr.asFunction<
-      void Function(ffi.Pointer<libusb_context>, libusb_log_cb, int)>();
+  late final _libusb_set_log_cbPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<libusb_context>, libusb_log_cb, ffi.Int)
+        >
+      >('libusb_set_log_cb');
+  late final _libusb_set_log_cb = _libusb_set_log_cbPtr
+      .asFunction<
+        void Function(ffi.Pointer<libusb_context>, libusb_log_cb, int)
+      >();
 
   ffi.Pointer<libusb_version> libusb_get_version() {
     return _libusb_get_version();
@@ -90,128 +80,120 @@ class Libusb {
 
   late final _libusb_get_versionPtr =
       _lookup<ffi.NativeFunction<ffi.Pointer<libusb_version> Function()>>(
-          'libusb_get_version');
+        'libusb_get_version',
+      );
   late final _libusb_get_version = _libusb_get_versionPtr
       .asFunction<ffi.Pointer<libusb_version> Function()>();
 
-  int libusb_has_capability(
-    int capability,
-  ) {
-    return _libusb_has_capability(
-      capability,
-    );
+  int libusb_has_capability(int capability) {
+    return _libusb_has_capability(capability);
   }
 
   late final _libusb_has_capabilityPtr =
       _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Uint32)>>(
-          'libusb_has_capability');
-  late final _libusb_has_capability =
-      _libusb_has_capabilityPtr.asFunction<int Function(int)>();
+        'libusb_has_capability',
+      );
+  late final _libusb_has_capability = _libusb_has_capabilityPtr
+      .asFunction<int Function(int)>();
 
-  ffi.Pointer<ffi.Char> libusb_error_name(
-    int errcode,
-  ) {
-    return _libusb_error_name(
-      errcode,
-    );
+  ffi.Pointer<ffi.Char> libusb_error_name(int errcode) {
+    return _libusb_error_name(errcode);
   }
 
   late final _libusb_error_namePtr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
-          'libusb_error_name');
-  late final _libusb_error_name =
-      _libusb_error_namePtr.asFunction<ffi.Pointer<ffi.Char> Function(int)>();
+        'libusb_error_name',
+      );
+  late final _libusb_error_name = _libusb_error_namePtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(int)>();
 
-  int libusb_setlocale(
-    ffi.Pointer<ffi.Char> locale,
-  ) {
-    return _libusb_setlocale(
-      locale,
-    );
+  int libusb_setlocale(ffi.Pointer<ffi.Char> locale) {
+    return _libusb_setlocale(locale);
   }
 
   late final _libusb_setlocalePtr =
       _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Char>)>>(
-          'libusb_setlocale');
-  late final _libusb_setlocale =
-      _libusb_setlocalePtr.asFunction<int Function(ffi.Pointer<ffi.Char>)>();
+        'libusb_setlocale',
+      );
+  late final _libusb_setlocale = _libusb_setlocalePtr
+      .asFunction<int Function(ffi.Pointer<ffi.Char>)>();
 
-  ffi.Pointer<ffi.Char> libusb_strerror(
-    int errcode,
-  ) {
-    return _libusb_strerror(
-      errcode,
-    );
+  ffi.Pointer<ffi.Char> libusb_strerror(int errcode) {
+    return _libusb_strerror(errcode);
   }
 
   late final _libusb_strerrorPtr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int32)>>(
-          'libusb_strerror');
-  late final _libusb_strerror =
-      _libusb_strerrorPtr.asFunction<ffi.Pointer<ffi.Char> Function(int)>();
+        'libusb_strerror',
+      );
+  late final _libusb_strerror = _libusb_strerrorPtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(int)>();
 
   int libusb_get_device_list(
     ffi.Pointer<libusb_context> ctx,
     ffi.Pointer<ffi.Pointer<ffi.Pointer<libusb_device>>> list,
   ) {
-    return _libusb_get_device_list(
-      ctx,
-      list,
-    );
+    return _libusb_get_device_list(ctx, list);
   }
 
-  late final _libusb_get_device_listPtr = _lookup<
-          ffi.NativeFunction<
-              pkg_libusb.Ssize Function(ffi.Pointer<libusb_context>,
-                  ffi.Pointer<ffi.Pointer<ffi.Pointer<libusb_device>>>)>>(
-      'libusb_get_device_list');
-  late final _libusb_get_device_list = _libusb_get_device_listPtr.asFunction<
-      int Function(ffi.Pointer<libusb_context>,
-          ffi.Pointer<ffi.Pointer<ffi.Pointer<libusb_device>>>)>();
+  late final _libusb_get_device_listPtr =
+      _lookup<
+        ffi.NativeFunction<
+          pkg_libusb.Ssize Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<ffi.Pointer<ffi.Pointer<libusb_device>>>,
+          )
+        >
+      >('libusb_get_device_list');
+  late final _libusb_get_device_list = _libusb_get_device_listPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_context>,
+          ffi.Pointer<ffi.Pointer<ffi.Pointer<libusb_device>>>,
+        )
+      >();
 
   void libusb_free_device_list(
     ffi.Pointer<ffi.Pointer<libusb_device>> list,
     int unref_devices,
   ) {
-    return _libusb_free_device_list(
-      list,
-      unref_devices,
-    );
+    return _libusb_free_device_list(list, unref_devices);
   }
 
-  late final _libusb_free_device_listPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ffi.Pointer<libusb_device>>,
-              ffi.Int)>>('libusb_free_device_list');
-  late final _libusb_free_device_list = _libusb_free_device_listPtr.asFunction<
-      void Function(ffi.Pointer<ffi.Pointer<libusb_device>>, int)>();
+  late final _libusb_free_device_listPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<ffi.Pointer<libusb_device>>, ffi.Int)
+        >
+      >('libusb_free_device_list');
+  late final _libusb_free_device_list = _libusb_free_device_listPtr
+      .asFunction<
+        void Function(ffi.Pointer<ffi.Pointer<libusb_device>>, int)
+      >();
 
-  ffi.Pointer<libusb_device> libusb_ref_device(
-    ffi.Pointer<libusb_device> dev,
-  ) {
-    return _libusb_ref_device(
-      dev,
-    );
+  ffi.Pointer<libusb_device> libusb_ref_device(ffi.Pointer<libusb_device> dev) {
+    return _libusb_ref_device(dev);
   }
 
-  late final _libusb_ref_devicePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<libusb_device> Function(
-              ffi.Pointer<libusb_device>)>>('libusb_ref_device');
-  late final _libusb_ref_device = _libusb_ref_devicePtr.asFunction<
-      ffi.Pointer<libusb_device> Function(ffi.Pointer<libusb_device>)>();
+  late final _libusb_ref_devicePtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Pointer<libusb_device> Function(ffi.Pointer<libusb_device>)
+        >
+      >('libusb_ref_device');
+  late final _libusb_ref_device = _libusb_ref_devicePtr
+      .asFunction<
+        ffi.Pointer<libusb_device> Function(ffi.Pointer<libusb_device>)
+      >();
 
-  void libusb_unref_device(
-    ffi.Pointer<libusb_device> dev,
-  ) {
-    return _libusb_unref_device(
-      dev,
-    );
+  void libusb_unref_device(ffi.Pointer<libusb_device> dev) {
+    return _libusb_unref_device(dev);
   }
 
-  late final _libusb_unref_devicePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_device>)>>(
-      'libusb_unref_device');
+  late final _libusb_unref_devicePtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_device>)>
+      >('libusb_unref_device');
   late final _libusb_unref_device = _libusb_unref_devicePtr
       .asFunction<void Function(ffi.Pointer<libusb_device>)>();
 
@@ -219,82 +201,98 @@ class Libusb {
     ffi.Pointer<libusb_device_handle> dev,
     ffi.Pointer<ffi.Int> config,
   ) {
-    return _libusb_get_configuration(
-      dev,
-      config,
-    );
+    return _libusb_get_configuration(dev, config);
   }
 
-  late final _libusb_get_configurationPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Pointer<ffi.Int>)>>('libusb_get_configuration');
-  late final _libusb_get_configuration =
-      _libusb_get_configurationPtr.asFunction<
-          int Function(
-              ffi.Pointer<libusb_device_handle>, ffi.Pointer<ffi.Int>)>();
+  late final _libusb_get_configurationPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device_handle>,
+            ffi.Pointer<ffi.Int>,
+          )
+        >
+      >('libusb_get_configuration');
+  late final _libusb_get_configuration = _libusb_get_configurationPtr
+      .asFunction<
+        int Function(ffi.Pointer<libusb_device_handle>, ffi.Pointer<ffi.Int>)
+      >();
 
   int libusb_get_device_descriptor(
     ffi.Pointer<libusb_device> dev,
     ffi.Pointer<libusb_device_descriptor> desc,
   ) {
-    return _libusb_get_device_descriptor(
-      dev,
-      desc,
-    );
+    return _libusb_get_device_descriptor(dev, desc);
   }
 
-  late final _libusb_get_device_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<libusb_device>,
-                  ffi.Pointer<libusb_device_descriptor>)>>(
-      'libusb_get_device_descriptor');
-  late final _libusb_get_device_descriptor =
-      _libusb_get_device_descriptorPtr.asFunction<
-          int Function(ffi.Pointer<libusb_device>,
-              ffi.Pointer<libusb_device_descriptor>)>();
+  late final _libusb_get_device_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device>,
+            ffi.Pointer<libusb_device_descriptor>,
+          )
+        >
+      >('libusb_get_device_descriptor');
+  late final _libusb_get_device_descriptor = _libusb_get_device_descriptorPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_device>,
+          ffi.Pointer<libusb_device_descriptor>,
+        )
+      >();
 
   int libusb_get_active_config_descriptor(
     ffi.Pointer<libusb_device> dev,
     ffi.Pointer<ffi.Pointer<libusb_config_descriptor>> config,
   ) {
-    return _libusb_get_active_config_descriptor(
-      dev,
-      config,
-    );
+    return _libusb_get_active_config_descriptor(dev, config);
   }
 
-  late final _libusb_get_active_config_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<libusb_device>,
-                  ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>)>>(
-      'libusb_get_active_config_descriptor');
+  late final _libusb_get_active_config_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device>,
+            ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>,
+          )
+        >
+      >('libusb_get_active_config_descriptor');
   late final _libusb_get_active_config_descriptor =
-      _libusb_get_active_config_descriptorPtr.asFunction<
-          int Function(ffi.Pointer<libusb_device>,
-              ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>)>();
+      _libusb_get_active_config_descriptorPtr
+          .asFunction<
+            int Function(
+              ffi.Pointer<libusb_device>,
+              ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>,
+            )
+          >();
 
   int libusb_get_config_descriptor(
     ffi.Pointer<libusb_device> dev,
     int config_index,
     ffi.Pointer<ffi.Pointer<libusb_config_descriptor>> config,
   ) {
-    return _libusb_get_config_descriptor(
-      dev,
-      config_index,
-      config,
-    );
+    return _libusb_get_config_descriptor(dev, config_index, config);
   }
 
-  late final _libusb_get_config_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<libusb_device>, ffi.Uint8,
-                  ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>)>>(
-      'libusb_get_config_descriptor');
-  late final _libusb_get_config_descriptor =
-      _libusb_get_config_descriptorPtr.asFunction<
-          int Function(ffi.Pointer<libusb_device>, int,
-              ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>)>();
+  late final _libusb_get_config_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device>,
+            ffi.Uint8,
+            ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>,
+          )
+        >
+      >('libusb_get_config_descriptor');
+  late final _libusb_get_config_descriptor = _libusb_get_config_descriptorPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_device>,
+          int,
+          ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>,
+        )
+      >();
 
   int libusb_get_config_descriptor_by_value(
     ffi.Pointer<libusb_device> dev,
@@ -308,28 +306,38 @@ class Libusb {
     );
   }
 
-  late final _libusb_get_config_descriptor_by_valuePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<libusb_device>, ffi.Uint8,
-                  ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>)>>(
-      'libusb_get_config_descriptor_by_value');
+  late final _libusb_get_config_descriptor_by_valuePtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device>,
+            ffi.Uint8,
+            ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>,
+          )
+        >
+      >('libusb_get_config_descriptor_by_value');
   late final _libusb_get_config_descriptor_by_value =
-      _libusb_get_config_descriptor_by_valuePtr.asFunction<
-          int Function(ffi.Pointer<libusb_device>, int,
-              ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>)>();
+      _libusb_get_config_descriptor_by_valuePtr
+          .asFunction<
+            int Function(
+              ffi.Pointer<libusb_device>,
+              int,
+              ffi.Pointer<ffi.Pointer<libusb_config_descriptor>>,
+            )
+          >();
 
   void libusb_free_config_descriptor(
     ffi.Pointer<libusb_config_descriptor> config,
   ) {
-    return _libusb_free_config_descriptor(
-      config,
-    );
+    return _libusb_free_config_descriptor(config);
   }
 
-  late final _libusb_free_config_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<libusb_config_descriptor>)>>(
-      'libusb_free_config_descriptor');
+  late final _libusb_free_config_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<libusb_config_descriptor>)
+        >
+      >('libusb_free_config_descriptor');
   late final _libusb_free_config_descriptor = _libusb_free_config_descriptorPtr
       .asFunction<void Function(ffi.Pointer<libusb_config_descriptor>)>();
 
@@ -338,79 +346,83 @@ class Libusb {
     ffi.Pointer<libusb_endpoint_descriptor> endpoint,
     ffi.Pointer<ffi.Pointer<libusb_ss_endpoint_companion_descriptor>> ep_comp,
   ) {
-    return _libusb_get_ss_endpoint_companion_descriptor(
-      ctx,
-      endpoint,
-      ep_comp,
-    );
+    return _libusb_get_ss_endpoint_companion_descriptor(ctx, endpoint, ep_comp);
   }
 
-  late final _libusb_get_ss_endpoint_companion_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(
-                  ffi.Pointer<libusb_context>,
-                  ffi.Pointer<libusb_endpoint_descriptor>,
-                  ffi.Pointer<
-                      ffi.Pointer<libusb_ss_endpoint_companion_descriptor>>)>>(
-      'libusb_get_ss_endpoint_companion_descriptor');
+  late final _libusb_get_ss_endpoint_companion_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<libusb_endpoint_descriptor>,
+            ffi.Pointer<ffi.Pointer<libusb_ss_endpoint_companion_descriptor>>,
+          )
+        >
+      >('libusb_get_ss_endpoint_companion_descriptor');
   late final _libusb_get_ss_endpoint_companion_descriptor =
-      _libusb_get_ss_endpoint_companion_descriptorPtr.asFunction<
-          int Function(
+      _libusb_get_ss_endpoint_companion_descriptorPtr
+          .asFunction<
+            int Function(
               ffi.Pointer<libusb_context>,
               ffi.Pointer<libusb_endpoint_descriptor>,
-              ffi.Pointer<
-                  ffi.Pointer<libusb_ss_endpoint_companion_descriptor>>)>();
+              ffi.Pointer<ffi.Pointer<libusb_ss_endpoint_companion_descriptor>>,
+            )
+          >();
 
   void libusb_free_ss_endpoint_companion_descriptor(
     ffi.Pointer<libusb_ss_endpoint_companion_descriptor> ep_comp,
   ) {
-    return _libusb_free_ss_endpoint_companion_descriptor(
-      ep_comp,
-    );
+    return _libusb_free_ss_endpoint_companion_descriptor(ep_comp);
   }
 
-  late final _libusb_free_ss_endpoint_companion_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Pointer<libusb_ss_endpoint_companion_descriptor>)>>(
-      'libusb_free_ss_endpoint_companion_descriptor');
+  late final _libusb_free_ss_endpoint_companion_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(
+            ffi.Pointer<libusb_ss_endpoint_companion_descriptor>,
+          )
+        >
+      >('libusb_free_ss_endpoint_companion_descriptor');
   late final _libusb_free_ss_endpoint_companion_descriptor =
-      _libusb_free_ss_endpoint_companion_descriptorPtr.asFunction<
-          void Function(
-              ffi.Pointer<libusb_ss_endpoint_companion_descriptor>)>();
+      _libusb_free_ss_endpoint_companion_descriptorPtr
+          .asFunction<
+            void Function(ffi.Pointer<libusb_ss_endpoint_companion_descriptor>)
+          >();
 
   int libusb_get_bos_descriptor(
     ffi.Pointer<libusb_device_handle> dev_handle,
     ffi.Pointer<ffi.Pointer<libusb_bos_descriptor>> bos,
   ) {
-    return _libusb_get_bos_descriptor(
-      dev_handle,
-      bos,
-    );
+    return _libusb_get_bos_descriptor(dev_handle, bos);
   }
 
-  late final _libusb_get_bos_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-                  ffi.Pointer<ffi.Pointer<libusb_bos_descriptor>>)>>(
-      'libusb_get_bos_descriptor');
-  late final _libusb_get_bos_descriptor =
-      _libusb_get_bos_descriptorPtr.asFunction<
-          int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Pointer<ffi.Pointer<libusb_bos_descriptor>>)>();
+  late final _libusb_get_bos_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device_handle>,
+            ffi.Pointer<ffi.Pointer<libusb_bos_descriptor>>,
+          )
+        >
+      >('libusb_get_bos_descriptor');
+  late final _libusb_get_bos_descriptor = _libusb_get_bos_descriptorPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_device_handle>,
+          ffi.Pointer<ffi.Pointer<libusb_bos_descriptor>>,
+        )
+      >();
 
-  void libusb_free_bos_descriptor(
-    ffi.Pointer<libusb_bos_descriptor> bos,
-  ) {
-    return _libusb_free_bos_descriptor(
-      bos,
-    );
+  void libusb_free_bos_descriptor(ffi.Pointer<libusb_bos_descriptor> bos) {
+    return _libusb_free_bos_descriptor(bos);
   }
 
-  late final _libusb_free_bos_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<libusb_bos_descriptor>)>>(
-      'libusb_free_bos_descriptor');
+  late final _libusb_free_bos_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<libusb_bos_descriptor>)
+        >
+      >('libusb_free_bos_descriptor');
   late final _libusb_free_bos_descriptor = _libusb_free_bos_descriptorPtr
       .asFunction<void Function(ffi.Pointer<libusb_bos_descriptor>)>();
 
@@ -418,7 +430,7 @@ class Libusb {
     ffi.Pointer<libusb_context> ctx,
     ffi.Pointer<libusb_bos_dev_capability_descriptor> dev_cap,
     ffi.Pointer<ffi.Pointer<libusb_usb_2_0_extension_descriptor>>
-        usb_2_0_extension,
+    usb_2_0_extension,
   ) {
     return _libusb_get_usb_2_0_extension_descriptor(
       ctx,
@@ -427,43 +439,49 @@ class Libusb {
     );
   }
 
-  late final _libusb_get_usb_2_0_extension_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(
-                  ffi.Pointer<libusb_context>,
-                  ffi.Pointer<libusb_bos_dev_capability_descriptor>,
-                  ffi.Pointer<
-                      ffi.Pointer<libusb_usb_2_0_extension_descriptor>>)>>(
-      'libusb_get_usb_2_0_extension_descriptor');
+  late final _libusb_get_usb_2_0_extension_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<libusb_bos_dev_capability_descriptor>,
+            ffi.Pointer<ffi.Pointer<libusb_usb_2_0_extension_descriptor>>,
+          )
+        >
+      >('libusb_get_usb_2_0_extension_descriptor');
   late final _libusb_get_usb_2_0_extension_descriptor =
-      _libusb_get_usb_2_0_extension_descriptorPtr.asFunction<
-          int Function(
+      _libusb_get_usb_2_0_extension_descriptorPtr
+          .asFunction<
+            int Function(
               ffi.Pointer<libusb_context>,
               ffi.Pointer<libusb_bos_dev_capability_descriptor>,
-              ffi.Pointer<ffi.Pointer<libusb_usb_2_0_extension_descriptor>>)>();
+              ffi.Pointer<ffi.Pointer<libusb_usb_2_0_extension_descriptor>>,
+            )
+          >();
 
   void libusb_free_usb_2_0_extension_descriptor(
     ffi.Pointer<libusb_usb_2_0_extension_descriptor> usb_2_0_extension,
   ) {
-    return _libusb_free_usb_2_0_extension_descriptor(
-      usb_2_0_extension,
-    );
+    return _libusb_free_usb_2_0_extension_descriptor(usb_2_0_extension);
   }
 
-  late final _libusb_free_usb_2_0_extension_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Pointer<libusb_usb_2_0_extension_descriptor>)>>(
-      'libusb_free_usb_2_0_extension_descriptor');
+  late final _libusb_free_usb_2_0_extension_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<libusb_usb_2_0_extension_descriptor>)
+        >
+      >('libusb_free_usb_2_0_extension_descriptor');
   late final _libusb_free_usb_2_0_extension_descriptor =
-      _libusb_free_usb_2_0_extension_descriptorPtr.asFunction<
-          void Function(ffi.Pointer<libusb_usb_2_0_extension_descriptor>)>();
+      _libusb_free_usb_2_0_extension_descriptorPtr
+          .asFunction<
+            void Function(ffi.Pointer<libusb_usb_2_0_extension_descriptor>)
+          >();
 
   int libusb_get_ss_usb_device_capability_descriptor(
     ffi.Pointer<libusb_context> ctx,
     ffi.Pointer<libusb_bos_dev_capability_descriptor> dev_cap,
     ffi.Pointer<ffi.Pointer<libusb_ss_usb_device_capability_descriptor>>
-        ss_usb_device_cap,
+    ss_usb_device_cap,
   ) {
     return _libusb_get_ss_usb_device_capability_descriptor(
       ctx,
@@ -472,108 +490,117 @@ class Libusb {
     );
   }
 
-  late final _libusb_get_ss_usb_device_capability_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(
-                  ffi.Pointer<libusb_context>,
-                  ffi.Pointer<libusb_bos_dev_capability_descriptor>,
-                  ffi.Pointer<
-                      ffi.Pointer<
-                          libusb_ss_usb_device_capability_descriptor>>)>>(
-      'libusb_get_ss_usb_device_capability_descriptor');
+  late final _libusb_get_ss_usb_device_capability_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<libusb_bos_dev_capability_descriptor>,
+            ffi.Pointer<
+              ffi.Pointer<libusb_ss_usb_device_capability_descriptor>
+            >,
+          )
+        >
+      >('libusb_get_ss_usb_device_capability_descriptor');
   late final _libusb_get_ss_usb_device_capability_descriptor =
-      _libusb_get_ss_usb_device_capability_descriptorPtr.asFunction<
-          int Function(
+      _libusb_get_ss_usb_device_capability_descriptorPtr
+          .asFunction<
+            int Function(
               ffi.Pointer<libusb_context>,
               ffi.Pointer<libusb_bos_dev_capability_descriptor>,
               ffi.Pointer<
-                  ffi.Pointer<libusb_ss_usb_device_capability_descriptor>>)>();
+                ffi.Pointer<libusb_ss_usb_device_capability_descriptor>
+              >,
+            )
+          >();
 
   void libusb_free_ss_usb_device_capability_descriptor(
     ffi.Pointer<libusb_ss_usb_device_capability_descriptor> ss_usb_device_cap,
   ) {
-    return _libusb_free_ss_usb_device_capability_descriptor(
-      ss_usb_device_cap,
-    );
+    return _libusb_free_ss_usb_device_capability_descriptor(ss_usb_device_cap);
   }
 
-  late final _libusb_free_ss_usb_device_capability_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Pointer<libusb_ss_usb_device_capability_descriptor>)>>(
-      'libusb_free_ss_usb_device_capability_descriptor');
+  late final _libusb_free_ss_usb_device_capability_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(
+            ffi.Pointer<libusb_ss_usb_device_capability_descriptor>,
+          )
+        >
+      >('libusb_free_ss_usb_device_capability_descriptor');
   late final _libusb_free_ss_usb_device_capability_descriptor =
-      _libusb_free_ss_usb_device_capability_descriptorPtr.asFunction<
-          void Function(
-              ffi.Pointer<libusb_ss_usb_device_capability_descriptor>)>();
+      _libusb_free_ss_usb_device_capability_descriptorPtr
+          .asFunction<
+            void Function(
+              ffi.Pointer<libusb_ss_usb_device_capability_descriptor>,
+            )
+          >();
 
   int libusb_get_container_id_descriptor(
     ffi.Pointer<libusb_context> ctx,
     ffi.Pointer<libusb_bos_dev_capability_descriptor> dev_cap,
     ffi.Pointer<ffi.Pointer<libusb_container_id_descriptor>> container_id,
   ) {
-    return _libusb_get_container_id_descriptor(
-      ctx,
-      dev_cap,
-      container_id,
-    );
+    return _libusb_get_container_id_descriptor(ctx, dev_cap, container_id);
   }
 
-  late final _libusb_get_container_id_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(
-                  ffi.Pointer<libusb_context>,
-                  ffi.Pointer<libusb_bos_dev_capability_descriptor>,
-                  ffi.Pointer<ffi.Pointer<libusb_container_id_descriptor>>)>>(
-      'libusb_get_container_id_descriptor');
+  late final _libusb_get_container_id_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<libusb_bos_dev_capability_descriptor>,
+            ffi.Pointer<ffi.Pointer<libusb_container_id_descriptor>>,
+          )
+        >
+      >('libusb_get_container_id_descriptor');
   late final _libusb_get_container_id_descriptor =
-      _libusb_get_container_id_descriptorPtr.asFunction<
-          int Function(
+      _libusb_get_container_id_descriptorPtr
+          .asFunction<
+            int Function(
               ffi.Pointer<libusb_context>,
               ffi.Pointer<libusb_bos_dev_capability_descriptor>,
-              ffi.Pointer<ffi.Pointer<libusb_container_id_descriptor>>)>();
+              ffi.Pointer<ffi.Pointer<libusb_container_id_descriptor>>,
+            )
+          >();
 
   void libusb_free_container_id_descriptor(
     ffi.Pointer<libusb_container_id_descriptor> container_id,
   ) {
-    return _libusb_free_container_id_descriptor(
-      container_id,
-    );
+    return _libusb_free_container_id_descriptor(container_id);
   }
 
-  late final _libusb_free_container_id_descriptorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<libusb_container_id_descriptor>)>>(
-      'libusb_free_container_id_descriptor');
+  late final _libusb_free_container_id_descriptorPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<libusb_container_id_descriptor>)
+        >
+      >('libusb_free_container_id_descriptor');
   late final _libusb_free_container_id_descriptor =
-      _libusb_free_container_id_descriptorPtr.asFunction<
-          void Function(ffi.Pointer<libusb_container_id_descriptor>)>();
+      _libusb_free_container_id_descriptorPtr
+          .asFunction<
+            void Function(ffi.Pointer<libusb_container_id_descriptor>)
+          >();
 
-  int libusb_get_bus_number(
-    ffi.Pointer<libusb_device> dev,
-  ) {
-    return _libusb_get_bus_number(
-      dev,
-    );
+  int libusb_get_bus_number(ffi.Pointer<libusb_device> dev) {
+    return _libusb_get_bus_number(dev);
   }
 
-  late final _libusb_get_bus_numberPtr = _lookup<
-          ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<libusb_device>)>>(
-      'libusb_get_bus_number');
+  late final _libusb_get_bus_numberPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<libusb_device>)>
+      >('libusb_get_bus_number');
   late final _libusb_get_bus_number = _libusb_get_bus_numberPtr
       .asFunction<int Function(ffi.Pointer<libusb_device>)>();
 
-  int libusb_get_port_number(
-    ffi.Pointer<libusb_device> dev,
-  ) {
-    return _libusb_get_port_number(
-      dev,
-    );
+  int libusb_get_port_number(ffi.Pointer<libusb_device> dev) {
+    return _libusb_get_port_number(dev);
   }
 
-  late final _libusb_get_port_numberPtr = _lookup<
-          ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<libusb_device>)>>(
-      'libusb_get_port_number');
+  late final _libusb_get_port_numberPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<libusb_device>)>
+      >('libusb_get_port_number');
   late final _libusb_get_port_number = _libusb_get_port_numberPtr
       .asFunction<int Function(ffi.Pointer<libusb_device>)>();
 
@@ -582,19 +609,23 @@ class Libusb {
     ffi.Pointer<ffi.Uint8> port_numbers,
     int port_numbers_len,
   ) {
-    return _libusb_get_port_numbers(
-      dev,
-      port_numbers,
-      port_numbers_len,
-    );
+    return _libusb_get_port_numbers(dev, port_numbers, port_numbers_len);
   }
 
-  late final _libusb_get_port_numbersPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device>, ffi.Pointer<ffi.Uint8>,
-              ffi.Int)>>('libusb_get_port_numbers');
-  late final _libusb_get_port_numbers = _libusb_get_port_numbersPtr.asFunction<
-      int Function(ffi.Pointer<libusb_device>, ffi.Pointer<ffi.Uint8>, int)>();
+  late final _libusb_get_port_numbersPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device>,
+            ffi.Pointer<ffi.Uint8>,
+            ffi.Int,
+          )
+        >
+      >('libusb_get_port_numbers');
+  late final _libusb_get_port_numbers = _libusb_get_port_numbersPtr
+      .asFunction<
+        int Function(ffi.Pointer<libusb_device>, ffi.Pointer<ffi.Uint8>, int)
+      >();
 
   int libusb_get_port_path(
     ffi.Pointer<libusb_context> ctx,
@@ -602,82 +633,77 @@ class Libusb {
     ffi.Pointer<ffi.Uint8> path,
     int path_length,
   ) {
-    return _libusb_get_port_path(
-      ctx,
-      dev,
-      path,
-      path_length,
-    );
+    return _libusb_get_port_path(ctx, dev, path, path_length);
   }
 
-  late final _libusb_get_port_pathPtr = _lookup<
-      ffi.NativeFunction<
+  late final _libusb_get_port_pathPtr =
+      _lookup<
+        ffi.NativeFunction<
           ffi.Int Function(
-              ffi.Pointer<libusb_context>,
-              ffi.Pointer<libusb_device>,
-              ffi.Pointer<ffi.Uint8>,
-              ffi.Uint8)>>('libusb_get_port_path');
-  late final _libusb_get_port_path = _libusb_get_port_pathPtr.asFunction<
-      int Function(ffi.Pointer<libusb_context>, ffi.Pointer<libusb_device>,
-          ffi.Pointer<ffi.Uint8>, int)>();
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<libusb_device>,
+            ffi.Pointer<ffi.Uint8>,
+            ffi.Uint8,
+          )
+        >
+      >('libusb_get_port_path');
+  late final _libusb_get_port_path = _libusb_get_port_pathPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_context>,
+          ffi.Pointer<libusb_device>,
+          ffi.Pointer<ffi.Uint8>,
+          int,
+        )
+      >();
 
-  ffi.Pointer<libusb_device> libusb_get_parent(
-    ffi.Pointer<libusb_device> dev,
-  ) {
-    return _libusb_get_parent(
-      dev,
-    );
+  ffi.Pointer<libusb_device> libusb_get_parent(ffi.Pointer<libusb_device> dev) {
+    return _libusb_get_parent(dev);
   }
 
-  late final _libusb_get_parentPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<libusb_device> Function(
-              ffi.Pointer<libusb_device>)>>('libusb_get_parent');
-  late final _libusb_get_parent = _libusb_get_parentPtr.asFunction<
-      ffi.Pointer<libusb_device> Function(ffi.Pointer<libusb_device>)>();
+  late final _libusb_get_parentPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Pointer<libusb_device> Function(ffi.Pointer<libusb_device>)
+        >
+      >('libusb_get_parent');
+  late final _libusb_get_parent = _libusb_get_parentPtr
+      .asFunction<
+        ffi.Pointer<libusb_device> Function(ffi.Pointer<libusb_device>)
+      >();
 
-  int libusb_get_device_address(
-    ffi.Pointer<libusb_device> dev,
-  ) {
-    return _libusb_get_device_address(
-      dev,
-    );
+  int libusb_get_device_address(ffi.Pointer<libusb_device> dev) {
+    return _libusb_get_device_address(dev);
   }
 
-  late final _libusb_get_device_addressPtr = _lookup<
-          ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<libusb_device>)>>(
-      'libusb_get_device_address');
+  late final _libusb_get_device_addressPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<libusb_device>)>
+      >('libusb_get_device_address');
   late final _libusb_get_device_address = _libusb_get_device_addressPtr
       .asFunction<int Function(ffi.Pointer<libusb_device>)>();
 
-  int libusb_get_device_speed(
-    ffi.Pointer<libusb_device> dev,
-  ) {
-    return _libusb_get_device_speed(
-      dev,
-    );
+  int libusb_get_device_speed(ffi.Pointer<libusb_device> dev) {
+    return _libusb_get_device_speed(dev);
   }
 
   late final _libusb_get_device_speedPtr =
       _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_device>)>>(
-          'libusb_get_device_speed');
+        'libusb_get_device_speed',
+      );
   late final _libusb_get_device_speed = _libusb_get_device_speedPtr
       .asFunction<int Function(ffi.Pointer<libusb_device>)>();
 
-  int libusb_get_max_packet_size(
-    ffi.Pointer<libusb_device> dev,
-    int endpoint,
-  ) {
-    return _libusb_get_max_packet_size(
-      dev,
-      endpoint,
-    );
+  int libusb_get_max_packet_size(ffi.Pointer<libusb_device> dev, int endpoint) {
+    return _libusb_get_max_packet_size(dev, endpoint);
   }
 
-  late final _libusb_get_max_packet_sizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device>,
-              ffi.UnsignedChar)>>('libusb_get_max_packet_size');
+  late final _libusb_get_max_packet_sizePtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device>, ffi.UnsignedChar)
+        >
+      >('libusb_get_max_packet_size');
   late final _libusb_get_max_packet_size = _libusb_get_max_packet_sizePtr
       .asFunction<int Function(ffi.Pointer<libusb_device>, int)>();
 
@@ -685,16 +711,15 @@ class Libusb {
     ffi.Pointer<libusb_device> dev,
     int endpoint,
   ) {
-    return _libusb_get_max_iso_packet_size(
-      dev,
-      endpoint,
-    );
+    return _libusb_get_max_iso_packet_size(dev, endpoint);
   }
 
-  late final _libusb_get_max_iso_packet_sizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device>,
-              ffi.UnsignedChar)>>('libusb_get_max_iso_packet_size');
+  late final _libusb_get_max_iso_packet_sizePtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device>, ffi.UnsignedChar)
+        >
+      >('libusb_get_max_iso_packet_size');
   late final _libusb_get_max_iso_packet_size =
       _libusb_get_max_iso_packet_sizePtr
           .asFunction<int Function(ffi.Pointer<libusb_device>, int)>();
@@ -704,84 +729,93 @@ class Libusb {
     int sys_dev,
     ffi.Pointer<ffi.Pointer<libusb_device_handle>> dev_handle,
   ) {
-    return _libusb_wrap_sys_device(
-      ctx,
-      sys_dev,
-      dev_handle,
-    );
+    return _libusb_wrap_sys_device(ctx, sys_dev, dev_handle);
   }
 
-  late final _libusb_wrap_sys_devicePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<libusb_context>, ffi.IntPtr,
-                  ffi.Pointer<ffi.Pointer<libusb_device_handle>>)>>(
-      'libusb_wrap_sys_device');
-  late final _libusb_wrap_sys_device = _libusb_wrap_sys_devicePtr.asFunction<
-      int Function(ffi.Pointer<libusb_context>, int,
-          ffi.Pointer<ffi.Pointer<libusb_device_handle>>)>();
+  late final _libusb_wrap_sys_devicePtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.IntPtr,
+            ffi.Pointer<ffi.Pointer<libusb_device_handle>>,
+          )
+        >
+      >('libusb_wrap_sys_device');
+  late final _libusb_wrap_sys_device = _libusb_wrap_sys_devicePtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_context>,
+          int,
+          ffi.Pointer<ffi.Pointer<libusb_device_handle>>,
+        )
+      >();
 
   int libusb_open(
     ffi.Pointer<libusb_device> dev,
     ffi.Pointer<ffi.Pointer<libusb_device_handle>> dev_handle,
   ) {
-    return _libusb_open(
-      dev,
-      dev_handle,
-    );
+    return _libusb_open(dev, dev_handle);
   }
 
-  late final _libusb_openPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device>,
-              ffi.Pointer<ffi.Pointer<libusb_device_handle>>)>>('libusb_open');
-  late final _libusb_open = _libusb_openPtr.asFunction<
-      int Function(ffi.Pointer<libusb_device>,
-          ffi.Pointer<ffi.Pointer<libusb_device_handle>>)>();
+  late final _libusb_openPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device>,
+            ffi.Pointer<ffi.Pointer<libusb_device_handle>>,
+          )
+        >
+      >('libusb_open');
+  late final _libusb_open = _libusb_openPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_device>,
+          ffi.Pointer<ffi.Pointer<libusb_device_handle>>,
+        )
+      >();
 
-  void libusb_close(
-    ffi.Pointer<libusb_device_handle> dev_handle,
-  ) {
-    return _libusb_close(
-      dev_handle,
-    );
+  void libusb_close(ffi.Pointer<libusb_device_handle> dev_handle) {
+    return _libusb_close(dev_handle);
   }
 
-  late final _libusb_closePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<libusb_device_handle>)>>('libusb_close');
+  late final _libusb_closePtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_device_handle>)>
+      >('libusb_close');
   late final _libusb_close = _libusb_closePtr
       .asFunction<void Function(ffi.Pointer<libusb_device_handle>)>();
 
   ffi.Pointer<libusb_device> libusb_get_device(
     ffi.Pointer<libusb_device_handle> dev_handle,
   ) {
-    return _libusb_get_device(
-      dev_handle,
-    );
+    return _libusb_get_device(dev_handle);
   }
 
-  late final _libusb_get_devicePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<libusb_device> Function(
-              ffi.Pointer<libusb_device_handle>)>>('libusb_get_device');
-  late final _libusb_get_device = _libusb_get_devicePtr.asFunction<
-      ffi.Pointer<libusb_device> Function(ffi.Pointer<libusb_device_handle>)>();
+  late final _libusb_get_devicePtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Pointer<libusb_device> Function(ffi.Pointer<libusb_device_handle>)
+        >
+      >('libusb_get_device');
+  late final _libusb_get_device = _libusb_get_devicePtr
+      .asFunction<
+        ffi.Pointer<libusb_device> Function(ffi.Pointer<libusb_device_handle>)
+      >();
 
   int libusb_set_configuration(
     ffi.Pointer<libusb_device_handle> dev_handle,
     int configuration,
   ) {
-    return _libusb_set_configuration(
-      dev_handle,
-      configuration,
-    );
+    return _libusb_set_configuration(dev_handle, configuration);
   }
 
-  late final _libusb_set_configurationPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Int)>>('libusb_set_configuration');
+  late final _libusb_set_configurationPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.Int)
+        >
+      >('libusb_set_configuration');
   late final _libusb_set_configuration = _libusb_set_configurationPtr
       .asFunction<int Function(ffi.Pointer<libusb_device_handle>, int)>();
 
@@ -789,16 +823,15 @@ class Libusb {
     ffi.Pointer<libusb_device_handle> dev_handle,
     int interface_number,
   ) {
-    return _libusb_claim_interface(
-      dev_handle,
-      interface_number,
-    );
+    return _libusb_claim_interface(dev_handle, interface_number);
   }
 
-  late final _libusb_claim_interfacePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Int)>>('libusb_claim_interface');
+  late final _libusb_claim_interfacePtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.Int)
+        >
+      >('libusb_claim_interface');
   late final _libusb_claim_interface = _libusb_claim_interfacePtr
       .asFunction<int Function(ffi.Pointer<libusb_device_handle>, int)>();
 
@@ -806,16 +839,15 @@ class Libusb {
     ffi.Pointer<libusb_device_handle> dev_handle,
     int interface_number,
   ) {
-    return _libusb_release_interface(
-      dev_handle,
-      interface_number,
-    );
+    return _libusb_release_interface(dev_handle, interface_number);
   }
 
-  late final _libusb_release_interfacePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Int)>>('libusb_release_interface');
+  late final _libusb_release_interfacePtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.Int)
+        >
+      >('libusb_release_interface');
   late final _libusb_release_interface = _libusb_release_interfacePtr
       .asFunction<int Function(ffi.Pointer<libusb_device_handle>, int)>();
 
@@ -824,23 +856,28 @@ class Libusb {
     int vendor_id,
     int product_id,
   ) {
-    return _libusb_open_device_with_vid_pid(
-      ctx,
-      vendor_id,
-      product_id,
-    );
+    return _libusb_open_device_with_vid_pid(ctx, vendor_id, product_id);
   }
 
-  late final _libusb_open_device_with_vid_pidPtr = _lookup<
-      ffi.NativeFunction<
+  late final _libusb_open_device_with_vid_pidPtr =
+      _lookup<
+        ffi.NativeFunction<
           ffi.Pointer<libusb_device_handle> Function(
-              ffi.Pointer<libusb_context>,
-              ffi.Uint16,
-              ffi.Uint16)>>('libusb_open_device_with_vid_pid');
+            ffi.Pointer<libusb_context>,
+            ffi.Uint16,
+            ffi.Uint16,
+          )
+        >
+      >('libusb_open_device_with_vid_pid');
   late final _libusb_open_device_with_vid_pid =
-      _libusb_open_device_with_vid_pidPtr.asFunction<
-          ffi.Pointer<libusb_device_handle> Function(
-              ffi.Pointer<libusb_context>, int, int)>();
+      _libusb_open_device_with_vid_pidPtr
+          .asFunction<
+            ffi.Pointer<libusb_device_handle> Function(
+              ffi.Pointer<libusb_context>,
+              int,
+              int,
+            )
+          >();
 
   int libusb_set_interface_alt_setting(
     ffi.Pointer<libusb_device_handle> dev_handle,
@@ -854,43 +891,42 @@ class Libusb {
     );
   }
 
-  late final _libusb_set_interface_alt_settingPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.Int,
-              ffi.Int)>>('libusb_set_interface_alt_setting');
+  late final _libusb_set_interface_alt_settingPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.Int, ffi.Int)
+        >
+      >('libusb_set_interface_alt_setting');
   late final _libusb_set_interface_alt_setting =
-      _libusb_set_interface_alt_settingPtr.asFunction<
-          int Function(ffi.Pointer<libusb_device_handle>, int, int)>();
+      _libusb_set_interface_alt_settingPtr
+          .asFunction<
+            int Function(ffi.Pointer<libusb_device_handle>, int, int)
+          >();
 
   int libusb_clear_halt(
     ffi.Pointer<libusb_device_handle> dev_handle,
     int endpoint,
   ) {
-    return _libusb_clear_halt(
-      dev_handle,
-      endpoint,
-    );
+    return _libusb_clear_halt(dev_handle, endpoint);
   }
 
-  late final _libusb_clear_haltPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.UnsignedChar)>>('libusb_clear_halt');
+  late final _libusb_clear_haltPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.UnsignedChar)
+        >
+      >('libusb_clear_halt');
   late final _libusb_clear_halt = _libusb_clear_haltPtr
       .asFunction<int Function(ffi.Pointer<libusb_device_handle>, int)>();
 
-  int libusb_reset_device(
-    ffi.Pointer<libusb_device_handle> dev_handle,
-  ) {
-    return _libusb_reset_device(
-      dev_handle,
-    );
+  int libusb_reset_device(ffi.Pointer<libusb_device_handle> dev_handle) {
+    return _libusb_reset_device(dev_handle);
   }
 
-  late final _libusb_reset_devicePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<libusb_device_handle>)>>('libusb_reset_device');
+  late final _libusb_reset_devicePtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_device_handle>)>
+      >('libusb_reset_device');
   late final _libusb_reset_device = _libusb_reset_devicePtr
       .asFunction<int Function(ffi.Pointer<libusb_device_handle>)>();
 
@@ -908,87 +944,118 @@ class Libusb {
     );
   }
 
-  late final _libusb_alloc_streamsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.Uint32,
-              ffi.Pointer<ffi.UnsignedChar>, ffi.Int)>>('libusb_alloc_streams');
-  late final _libusb_alloc_streams = _libusb_alloc_streamsPtr.asFunction<
-      int Function(ffi.Pointer<libusb_device_handle>, int,
-          ffi.Pointer<ffi.UnsignedChar>, int)>();
+  late final _libusb_alloc_streamsPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device_handle>,
+            ffi.Uint32,
+            ffi.Pointer<ffi.UnsignedChar>,
+            ffi.Int,
+          )
+        >
+      >('libusb_alloc_streams');
+  late final _libusb_alloc_streams = _libusb_alloc_streamsPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_device_handle>,
+          int,
+          ffi.Pointer<ffi.UnsignedChar>,
+          int,
+        )
+      >();
 
   int libusb_free_streams(
     ffi.Pointer<libusb_device_handle> dev_handle,
     ffi.Pointer<ffi.UnsignedChar> endpoints,
     int num_endpoints,
   ) {
-    return _libusb_free_streams(
-      dev_handle,
-      endpoints,
-      num_endpoints,
-    );
+    return _libusb_free_streams(dev_handle, endpoints, num_endpoints);
   }
 
-  late final _libusb_free_streamsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Pointer<ffi.UnsignedChar>, ffi.Int)>>('libusb_free_streams');
-  late final _libusb_free_streams = _libusb_free_streamsPtr.asFunction<
-      int Function(ffi.Pointer<libusb_device_handle>,
-          ffi.Pointer<ffi.UnsignedChar>, int)>();
+  late final _libusb_free_streamsPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device_handle>,
+            ffi.Pointer<ffi.UnsignedChar>,
+            ffi.Int,
+          )
+        >
+      >('libusb_free_streams');
+  late final _libusb_free_streams = _libusb_free_streamsPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_device_handle>,
+          ffi.Pointer<ffi.UnsignedChar>,
+          int,
+        )
+      >();
 
   ffi.Pointer<ffi.UnsignedChar> libusb_dev_mem_alloc(
     ffi.Pointer<libusb_device_handle> dev_handle,
     int length,
   ) {
-    return _libusb_dev_mem_alloc(
-      dev_handle,
-      length,
-    );
+    return _libusb_dev_mem_alloc(dev_handle, length);
   }
 
-  late final _libusb_dev_mem_allocPtr = _lookup<
-      ffi.NativeFunction<
+  late final _libusb_dev_mem_allocPtr =
+      _lookup<
+        ffi.NativeFunction<
           ffi.Pointer<ffi.UnsignedChar> Function(
-              ffi.Pointer<libusb_device_handle>,
-              ffi.Size)>>('libusb_dev_mem_alloc');
-  late final _libusb_dev_mem_alloc = _libusb_dev_mem_allocPtr.asFunction<
-      ffi.Pointer<ffi.UnsignedChar> Function(
-          ffi.Pointer<libusb_device_handle>, int)>();
+            ffi.Pointer<libusb_device_handle>,
+            ffi.Size,
+          )
+        >
+      >('libusb_dev_mem_alloc');
+  late final _libusb_dev_mem_alloc = _libusb_dev_mem_allocPtr
+      .asFunction<
+        ffi.Pointer<ffi.UnsignedChar> Function(
+          ffi.Pointer<libusb_device_handle>,
+          int,
+        )
+      >();
 
   int libusb_dev_mem_free(
     ffi.Pointer<libusb_device_handle> dev_handle,
     ffi.Pointer<ffi.UnsignedChar> buffer,
     int length,
   ) {
-    return _libusb_dev_mem_free(
-      dev_handle,
-      buffer,
-      length,
-    );
+    return _libusb_dev_mem_free(dev_handle, buffer, length);
   }
 
-  late final _libusb_dev_mem_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Pointer<ffi.UnsignedChar>, ffi.Size)>>('libusb_dev_mem_free');
-  late final _libusb_dev_mem_free = _libusb_dev_mem_freePtr.asFunction<
-      int Function(ffi.Pointer<libusb_device_handle>,
-          ffi.Pointer<ffi.UnsignedChar>, int)>();
+  late final _libusb_dev_mem_freePtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_device_handle>,
+            ffi.Pointer<ffi.UnsignedChar>,
+            ffi.Size,
+          )
+        >
+      >('libusb_dev_mem_free');
+  late final _libusb_dev_mem_free = _libusb_dev_mem_freePtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_device_handle>,
+          ffi.Pointer<ffi.UnsignedChar>,
+          int,
+        )
+      >();
 
   int libusb_kernel_driver_active(
     ffi.Pointer<libusb_device_handle> dev_handle,
     int interface_number,
   ) {
-    return _libusb_kernel_driver_active(
-      dev_handle,
-      interface_number,
-    );
+    return _libusb_kernel_driver_active(dev_handle, interface_number);
   }
 
-  late final _libusb_kernel_driver_activePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Int)>>('libusb_kernel_driver_active');
+  late final _libusb_kernel_driver_activePtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.Int)
+        >
+      >('libusb_kernel_driver_active');
   late final _libusb_kernel_driver_active = _libusb_kernel_driver_activePtr
       .asFunction<int Function(ffi.Pointer<libusb_device_handle>, int)>();
 
@@ -996,16 +1063,15 @@ class Libusb {
     ffi.Pointer<libusb_device_handle> dev_handle,
     int interface_number,
   ) {
-    return _libusb_detach_kernel_driver(
-      dev_handle,
-      interface_number,
-    );
+    return _libusb_detach_kernel_driver(dev_handle, interface_number);
   }
 
-  late final _libusb_detach_kernel_driverPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Int)>>('libusb_detach_kernel_driver');
+  late final _libusb_detach_kernel_driverPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.Int)
+        >
+      >('libusb_detach_kernel_driver');
   late final _libusb_detach_kernel_driver = _libusb_detach_kernel_driverPtr
       .asFunction<int Function(ffi.Pointer<libusb_device_handle>, int)>();
 
@@ -1013,16 +1079,15 @@ class Libusb {
     ffi.Pointer<libusb_device_handle> dev_handle,
     int interface_number,
   ) {
-    return _libusb_attach_kernel_driver(
-      dev_handle,
-      interface_number,
-    );
+    return _libusb_attach_kernel_driver(dev_handle, interface_number);
   }
 
-  late final _libusb_attach_kernel_driverPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Int)>>('libusb_attach_kernel_driver');
+  late final _libusb_attach_kernel_driverPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.Int)
+        >
+      >('libusb_attach_kernel_driver');
   late final _libusb_attach_kernel_driver = _libusb_attach_kernel_driverPtr
       .asFunction<int Function(ffi.Pointer<libusb_device_handle>, int)>();
 
@@ -1030,73 +1095,60 @@ class Libusb {
     ffi.Pointer<libusb_device_handle> dev_handle,
     int enable,
   ) {
-    return _libusb_set_auto_detach_kernel_driver(
-      dev_handle,
-      enable,
-    );
+    return _libusb_set_auto_detach_kernel_driver(dev_handle, enable);
   }
 
-  late final _libusb_set_auto_detach_kernel_driverPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_device_handle>,
-              ffi.Int)>>('libusb_set_auto_detach_kernel_driver');
+  late final _libusb_set_auto_detach_kernel_driverPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_device_handle>, ffi.Int)
+        >
+      >('libusb_set_auto_detach_kernel_driver');
   late final _libusb_set_auto_detach_kernel_driver =
       _libusb_set_auto_detach_kernel_driverPtr
           .asFunction<int Function(ffi.Pointer<libusb_device_handle>, int)>();
 
-  ffi.Pointer<libusb_transfer> libusb_alloc_transfer(
-    int iso_packets,
-  ) {
-    return _libusb_alloc_transfer(
-      iso_packets,
-    );
+  ffi.Pointer<libusb_transfer> libusb_alloc_transfer(int iso_packets) {
+    return _libusb_alloc_transfer(iso_packets);
   }
 
-  late final _libusb_alloc_transferPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<libusb_transfer> Function(ffi.Int)>>(
-      'libusb_alloc_transfer');
+  late final _libusb_alloc_transferPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Pointer<libusb_transfer> Function(ffi.Int)>
+      >('libusb_alloc_transfer');
   late final _libusb_alloc_transfer = _libusb_alloc_transferPtr
       .asFunction<ffi.Pointer<libusb_transfer> Function(int)>();
 
-  int libusb_submit_transfer(
-    ffi.Pointer<libusb_transfer> transfer,
-  ) {
-    return _libusb_submit_transfer(
-      transfer,
-    );
+  int libusb_submit_transfer(ffi.Pointer<libusb_transfer> transfer) {
+    return _libusb_submit_transfer(transfer);
   }
 
-  late final _libusb_submit_transferPtr = _lookup<
-          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_transfer>)>>(
-      'libusb_submit_transfer');
+  late final _libusb_submit_transferPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_transfer>)>
+      >('libusb_submit_transfer');
   late final _libusb_submit_transfer = _libusb_submit_transferPtr
       .asFunction<int Function(ffi.Pointer<libusb_transfer>)>();
 
-  int libusb_cancel_transfer(
-    ffi.Pointer<libusb_transfer> transfer,
-  ) {
-    return _libusb_cancel_transfer(
-      transfer,
-    );
+  int libusb_cancel_transfer(ffi.Pointer<libusb_transfer> transfer) {
+    return _libusb_cancel_transfer(transfer);
   }
 
-  late final _libusb_cancel_transferPtr = _lookup<
-          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_transfer>)>>(
-      'libusb_cancel_transfer');
+  late final _libusb_cancel_transferPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_transfer>)>
+      >('libusb_cancel_transfer');
   late final _libusb_cancel_transfer = _libusb_cancel_transferPtr
       .asFunction<int Function(ffi.Pointer<libusb_transfer>)>();
 
-  void libusb_free_transfer(
-    ffi.Pointer<libusb_transfer> transfer,
-  ) {
-    return _libusb_free_transfer(
-      transfer,
-    );
+  void libusb_free_transfer(ffi.Pointer<libusb_transfer> transfer) {
+    return _libusb_free_transfer(transfer);
   }
 
-  late final _libusb_free_transferPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_transfer>)>>(
-      'libusb_free_transfer');
+  late final _libusb_free_transferPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_transfer>)>
+      >('libusb_free_transfer');
   late final _libusb_free_transfer = _libusb_free_transferPtr
       .asFunction<void Function(ffi.Pointer<libusb_transfer>)>();
 
@@ -1104,31 +1156,26 @@ class Libusb {
     ffi.Pointer<libusb_transfer> transfer,
     int stream_id,
   ) {
-    return _libusb_transfer_set_stream_id(
-      transfer,
-      stream_id,
-    );
+    return _libusb_transfer_set_stream_id(transfer, stream_id);
   }
 
-  late final _libusb_transfer_set_stream_idPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<libusb_transfer>,
-              ffi.Uint32)>>('libusb_transfer_set_stream_id');
+  late final _libusb_transfer_set_stream_idPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<libusb_transfer>, ffi.Uint32)
+        >
+      >('libusb_transfer_set_stream_id');
   late final _libusb_transfer_set_stream_id = _libusb_transfer_set_stream_idPtr
       .asFunction<void Function(ffi.Pointer<libusb_transfer>, int)>();
 
-  int libusb_transfer_get_stream_id(
-    ffi.Pointer<libusb_transfer> transfer,
-  ) {
-    return _libusb_transfer_get_stream_id(
-      transfer,
-    );
+  int libusb_transfer_get_stream_id(ffi.Pointer<libusb_transfer> transfer) {
+    return _libusb_transfer_get_stream_id(transfer);
   }
 
-  late final _libusb_transfer_get_stream_idPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint32 Function(
-              ffi.Pointer<libusb_transfer>)>>('libusb_transfer_get_stream_id');
+  late final _libusb_transfer_get_stream_idPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<libusb_transfer>)>
+      >('libusb_transfer_get_stream_id');
   late final _libusb_transfer_get_stream_id = _libusb_transfer_get_stream_idPtr
       .asFunction<int Function(ffi.Pointer<libusb_transfer>)>();
 
@@ -1154,20 +1201,34 @@ class Libusb {
     );
   }
 
-  late final _libusb_control_transferPtr = _lookup<
-      ffi.NativeFunction<
+  late final _libusb_control_transferPtr =
+      _lookup<
+        ffi.NativeFunction<
           ffi.Int Function(
-              ffi.Pointer<libusb_device_handle>,
-              ffi.Uint8,
-              ffi.Uint8,
-              ffi.Uint16,
-              ffi.Uint16,
-              ffi.Pointer<ffi.UnsignedChar>,
-              ffi.Uint16,
-              ffi.UnsignedInt)>>('libusb_control_transfer');
-  late final _libusb_control_transfer = _libusb_control_transferPtr.asFunction<
-      int Function(ffi.Pointer<libusb_device_handle>, int, int, int, int,
-          ffi.Pointer<ffi.UnsignedChar>, int, int)>();
+            ffi.Pointer<libusb_device_handle>,
+            ffi.Uint8,
+            ffi.Uint8,
+            ffi.Uint16,
+            ffi.Uint16,
+            ffi.Pointer<ffi.UnsignedChar>,
+            ffi.Uint16,
+            ffi.UnsignedInt,
+          )
+        >
+      >('libusb_control_transfer');
+  late final _libusb_control_transfer = _libusb_control_transferPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_device_handle>,
+          int,
+          int,
+          int,
+          int,
+          ffi.Pointer<ffi.UnsignedChar>,
+          int,
+          int,
+        )
+      >();
 
   int libusb_bulk_transfer(
     ffi.Pointer<libusb_device_handle> dev_handle,
@@ -1187,18 +1248,30 @@ class Libusb {
     );
   }
 
-  late final _libusb_bulk_transferPtr = _lookup<
-      ffi.NativeFunction<
+  late final _libusb_bulk_transferPtr =
+      _lookup<
+        ffi.NativeFunction<
           ffi.Int Function(
-              ffi.Pointer<libusb_device_handle>,
-              ffi.UnsignedChar,
-              ffi.Pointer<ffi.UnsignedChar>,
-              ffi.Int,
-              ffi.Pointer<ffi.Int>,
-              ffi.UnsignedInt)>>('libusb_bulk_transfer');
-  late final _libusb_bulk_transfer = _libusb_bulk_transferPtr.asFunction<
-      int Function(ffi.Pointer<libusb_device_handle>, int,
-          ffi.Pointer<ffi.UnsignedChar>, int, ffi.Pointer<ffi.Int>, int)>();
+            ffi.Pointer<libusb_device_handle>,
+            ffi.UnsignedChar,
+            ffi.Pointer<ffi.UnsignedChar>,
+            ffi.Int,
+            ffi.Pointer<ffi.Int>,
+            ffi.UnsignedInt,
+          )
+        >
+      >('libusb_bulk_transfer');
+  late final _libusb_bulk_transfer = _libusb_bulk_transferPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_device_handle>,
+          int,
+          ffi.Pointer<ffi.UnsignedChar>,
+          int,
+          ffi.Pointer<ffi.Int>,
+          int,
+        )
+      >();
 
   int libusb_interrupt_transfer(
     ffi.Pointer<libusb_device_handle> dev_handle,
@@ -1218,19 +1291,30 @@ class Libusb {
     );
   }
 
-  late final _libusb_interrupt_transferPtr = _lookup<
-      ffi.NativeFunction<
+  late final _libusb_interrupt_transferPtr =
+      _lookup<
+        ffi.NativeFunction<
           ffi.Int Function(
-              ffi.Pointer<libusb_device_handle>,
-              ffi.UnsignedChar,
-              ffi.Pointer<ffi.UnsignedChar>,
-              ffi.Int,
-              ffi.Pointer<ffi.Int>,
-              ffi.UnsignedInt)>>('libusb_interrupt_transfer');
-  late final _libusb_interrupt_transfer =
-      _libusb_interrupt_transferPtr.asFunction<
-          int Function(ffi.Pointer<libusb_device_handle>, int,
-              ffi.Pointer<ffi.UnsignedChar>, int, ffi.Pointer<ffi.Int>, int)>();
+            ffi.Pointer<libusb_device_handle>,
+            ffi.UnsignedChar,
+            ffi.Pointer<ffi.UnsignedChar>,
+            ffi.Int,
+            ffi.Pointer<ffi.Int>,
+            ffi.UnsignedInt,
+          )
+        >
+      >('libusb_interrupt_transfer');
+  late final _libusb_interrupt_transfer = _libusb_interrupt_transferPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_device_handle>,
+          int,
+          ffi.Pointer<ffi.UnsignedChar>,
+          int,
+          ffi.Pointer<ffi.Int>,
+          int,
+        )
+      >();
 
   int libusb_get_string_descriptor_ascii(
     ffi.Pointer<libusb_device_handle> dev_handle,
@@ -1246,128 +1330,114 @@ class Libusb {
     );
   }
 
-  late final _libusb_get_string_descriptor_asciiPtr = _lookup<
-      ffi.NativeFunction<
+  late final _libusb_get_string_descriptor_asciiPtr =
+      _lookup<
+        ffi.NativeFunction<
           ffi.Int Function(
-              ffi.Pointer<libusb_device_handle>,
-              ffi.Uint8,
-              ffi.Pointer<ffi.UnsignedChar>,
-              ffi.Int)>>('libusb_get_string_descriptor_ascii');
+            ffi.Pointer<libusb_device_handle>,
+            ffi.Uint8,
+            ffi.Pointer<ffi.UnsignedChar>,
+            ffi.Int,
+          )
+        >
+      >('libusb_get_string_descriptor_ascii');
   late final _libusb_get_string_descriptor_ascii =
-      _libusb_get_string_descriptor_asciiPtr.asFunction<
-          int Function(ffi.Pointer<libusb_device_handle>, int,
-              ffi.Pointer<ffi.UnsignedChar>, int)>();
+      _libusb_get_string_descriptor_asciiPtr
+          .asFunction<
+            int Function(
+              ffi.Pointer<libusb_device_handle>,
+              int,
+              ffi.Pointer<ffi.UnsignedChar>,
+              int,
+            )
+          >();
 
-  int libusb_try_lock_events(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_try_lock_events(
-      ctx,
-    );
+  int libusb_try_lock_events(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_try_lock_events(ctx);
   }
 
-  late final _libusb_try_lock_eventsPtr = _lookup<
-          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_try_lock_events');
+  late final _libusb_try_lock_eventsPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_context>)>
+      >('libusb_try_lock_events');
   late final _libusb_try_lock_events = _libusb_try_lock_eventsPtr
       .asFunction<int Function(ffi.Pointer<libusb_context>)>();
 
-  void libusb_lock_events(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_lock_events(
-      ctx,
-    );
+  void libusb_lock_events(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_lock_events(ctx);
   }
 
-  late final _libusb_lock_eventsPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_lock_events');
+  late final _libusb_lock_eventsPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>
+      >('libusb_lock_events');
   late final _libusb_lock_events = _libusb_lock_eventsPtr
       .asFunction<void Function(ffi.Pointer<libusb_context>)>();
 
-  void libusb_unlock_events(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_unlock_events(
-      ctx,
-    );
+  void libusb_unlock_events(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_unlock_events(ctx);
   }
 
-  late final _libusb_unlock_eventsPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_unlock_events');
+  late final _libusb_unlock_eventsPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>
+      >('libusb_unlock_events');
   late final _libusb_unlock_events = _libusb_unlock_eventsPtr
       .asFunction<void Function(ffi.Pointer<libusb_context>)>();
 
-  int libusb_event_handling_ok(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_event_handling_ok(
-      ctx,
-    );
+  int libusb_event_handling_ok(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_event_handling_ok(ctx);
   }
 
-  late final _libusb_event_handling_okPtr = _lookup<
-          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_event_handling_ok');
+  late final _libusb_event_handling_okPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_context>)>
+      >('libusb_event_handling_ok');
   late final _libusb_event_handling_ok = _libusb_event_handling_okPtr
       .asFunction<int Function(ffi.Pointer<libusb_context>)>();
 
-  int libusb_event_handler_active(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_event_handler_active(
-      ctx,
-    );
+  int libusb_event_handler_active(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_event_handler_active(ctx);
   }
 
-  late final _libusb_event_handler_activePtr = _lookup<
-          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_event_handler_active');
+  late final _libusb_event_handler_activePtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_context>)>
+      >('libusb_event_handler_active');
   late final _libusb_event_handler_active = _libusb_event_handler_activePtr
       .asFunction<int Function(ffi.Pointer<libusb_context>)>();
 
-  void libusb_interrupt_event_handler(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_interrupt_event_handler(
-      ctx,
-    );
+  void libusb_interrupt_event_handler(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_interrupt_event_handler(ctx);
   }
 
-  late final _libusb_interrupt_event_handlerPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_interrupt_event_handler');
+  late final _libusb_interrupt_event_handlerPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>
+      >('libusb_interrupt_event_handler');
   late final _libusb_interrupt_event_handler =
       _libusb_interrupt_event_handlerPtr
           .asFunction<void Function(ffi.Pointer<libusb_context>)>();
 
-  void libusb_lock_event_waiters(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_lock_event_waiters(
-      ctx,
-    );
+  void libusb_lock_event_waiters(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_lock_event_waiters(ctx);
   }
 
-  late final _libusb_lock_event_waitersPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_lock_event_waiters');
+  late final _libusb_lock_event_waitersPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>
+      >('libusb_lock_event_waiters');
   late final _libusb_lock_event_waiters = _libusb_lock_event_waitersPtr
       .asFunction<void Function(ffi.Pointer<libusb_context>)>();
 
-  void libusb_unlock_event_waiters(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_unlock_event_waiters(
-      ctx,
-    );
+  void libusb_unlock_event_waiters(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_unlock_event_waiters(ctx);
   }
 
-  late final _libusb_unlock_event_waitersPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_unlock_event_waiters');
+  late final _libusb_unlock_event_waitersPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Void Function(ffi.Pointer<libusb_context>)>
+      >('libusb_unlock_event_waiters');
   late final _libusb_unlock_event_waiters = _libusb_unlock_event_waitersPtr
       .asFunction<void Function(ffi.Pointer<libusb_context>)>();
 
@@ -1375,74 +1445,86 @@ class Libusb {
     ffi.Pointer<libusb_context> ctx,
     ffi.Pointer<pkg_libusb.Timeval> tv,
   ) {
-    return _libusb_wait_for_event(
-      ctx,
-      tv,
-    );
+    return _libusb_wait_for_event(ctx, tv);
   }
 
-  late final _libusb_wait_for_eventPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_context>,
-              ffi.Pointer<pkg_libusb.Timeval>)>>('libusb_wait_for_event');
-  late final _libusb_wait_for_event = _libusb_wait_for_eventPtr.asFunction<
-      int Function(
-          ffi.Pointer<libusb_context>, ffi.Pointer<pkg_libusb.Timeval>)>();
+  late final _libusb_wait_for_eventPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<pkg_libusb.Timeval>,
+          )
+        >
+      >('libusb_wait_for_event');
+  late final _libusb_wait_for_event = _libusb_wait_for_eventPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_context>,
+          ffi.Pointer<pkg_libusb.Timeval>,
+        )
+      >();
 
   int libusb_handle_events_timeout(
     ffi.Pointer<libusb_context> ctx,
     ffi.Pointer<pkg_libusb.Timeval> tv,
   ) {
-    return _libusb_handle_events_timeout(
-      ctx,
-      tv,
-    );
+    return _libusb_handle_events_timeout(ctx, tv);
   }
 
-  late final _libusb_handle_events_timeoutPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<libusb_context>,
-                  ffi.Pointer<pkg_libusb.Timeval>)>>(
-      'libusb_handle_events_timeout');
-  late final _libusb_handle_events_timeout =
-      _libusb_handle_events_timeoutPtr.asFunction<
-          int Function(
-              ffi.Pointer<libusb_context>, ffi.Pointer<pkg_libusb.Timeval>)>();
+  late final _libusb_handle_events_timeoutPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<pkg_libusb.Timeval>,
+          )
+        >
+      >('libusb_handle_events_timeout');
+  late final _libusb_handle_events_timeout = _libusb_handle_events_timeoutPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_context>,
+          ffi.Pointer<pkg_libusb.Timeval>,
+        )
+      >();
 
   int libusb_handle_events_timeout_completed(
     ffi.Pointer<libusb_context> ctx,
     ffi.Pointer<pkg_libusb.Timeval> tv,
     ffi.Pointer<ffi.Int> completed,
   ) {
-    return _libusb_handle_events_timeout_completed(
-      ctx,
-      tv,
-      completed,
-    );
+    return _libusb_handle_events_timeout_completed(ctx, tv, completed);
   }
 
-  late final _libusb_handle_events_timeout_completedPtr = _lookup<
-      ffi.NativeFunction<
+  late final _libusb_handle_events_timeout_completedPtr =
+      _lookup<
+        ffi.NativeFunction<
           ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<pkg_libusb.Timeval>,
+            ffi.Pointer<ffi.Int>,
+          )
+        >
+      >('libusb_handle_events_timeout_completed');
+  late final _libusb_handle_events_timeout_completed =
+      _libusb_handle_events_timeout_completedPtr
+          .asFunction<
+            int Function(
               ffi.Pointer<libusb_context>,
               ffi.Pointer<pkg_libusb.Timeval>,
-              ffi.Pointer<ffi.Int>)>>('libusb_handle_events_timeout_completed');
-  late final _libusb_handle_events_timeout_completed =
-      _libusb_handle_events_timeout_completedPtr.asFunction<
-          int Function(ffi.Pointer<libusb_context>,
-              ffi.Pointer<pkg_libusb.Timeval>, ffi.Pointer<ffi.Int>)>();
+              ffi.Pointer<ffi.Int>,
+            )
+          >();
 
-  int libusb_handle_events(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_handle_events(
-      ctx,
-    );
+  int libusb_handle_events(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_handle_events(ctx);
   }
 
-  late final _libusb_handle_eventsPtr = _lookup<
-          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_handle_events');
+  late final _libusb_handle_eventsPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_context>)>
+      >('libusb_handle_events');
   late final _libusb_handle_events = _libusb_handle_eventsPtr
       .asFunction<int Function(ffi.Pointer<libusb_context>)>();
 
@@ -1450,50 +1532,53 @@ class Libusb {
     ffi.Pointer<libusb_context> ctx,
     ffi.Pointer<ffi.Int> completed,
   ) {
-    return _libusb_handle_events_completed(
-      ctx,
-      completed,
-    );
+    return _libusb_handle_events_completed(ctx, completed);
   }
 
-  late final _libusb_handle_events_completedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_context>,
-              ffi.Pointer<ffi.Int>)>>('libusb_handle_events_completed');
+  late final _libusb_handle_events_completedPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_context>, ffi.Pointer<ffi.Int>)
+        >
+      >('libusb_handle_events_completed');
   late final _libusb_handle_events_completed =
-      _libusb_handle_events_completedPtr.asFunction<
-          int Function(ffi.Pointer<libusb_context>, ffi.Pointer<ffi.Int>)>();
+      _libusb_handle_events_completedPtr
+          .asFunction<
+            int Function(ffi.Pointer<libusb_context>, ffi.Pointer<ffi.Int>)
+          >();
 
   int libusb_handle_events_locked(
     ffi.Pointer<libusb_context> ctx,
     ffi.Pointer<pkg_libusb.Timeval> tv,
   ) {
-    return _libusb_handle_events_locked(
-      ctx,
-      tv,
-    );
+    return _libusb_handle_events_locked(ctx, tv);
   }
 
-  late final _libusb_handle_events_lockedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_context>,
-              ffi.Pointer<pkg_libusb.Timeval>)>>('libusb_handle_events_locked');
-  late final _libusb_handle_events_locked =
-      _libusb_handle_events_lockedPtr.asFunction<
-          int Function(
-              ffi.Pointer<libusb_context>, ffi.Pointer<pkg_libusb.Timeval>)>();
+  late final _libusb_handle_events_lockedPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<pkg_libusb.Timeval>,
+          )
+        >
+      >('libusb_handle_events_locked');
+  late final _libusb_handle_events_locked = _libusb_handle_events_lockedPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_context>,
+          ffi.Pointer<pkg_libusb.Timeval>,
+        )
+      >();
 
-  int libusb_pollfds_handle_timeouts(
-    ffi.Pointer<libusb_context> ctx,
-  ) {
-    return _libusb_pollfds_handle_timeouts(
-      ctx,
-    );
+  int libusb_pollfds_handle_timeouts(ffi.Pointer<libusb_context> ctx) {
+    return _libusb_pollfds_handle_timeouts(ctx);
   }
 
-  late final _libusb_pollfds_handle_timeoutsPtr = _lookup<
-          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_context>)>>(
-      'libusb_pollfds_handle_timeouts');
+  late final _libusb_pollfds_handle_timeoutsPtr =
+      _lookup<
+        ffi.NativeFunction<ffi.Int Function(ffi.Pointer<libusb_context>)>
+      >('libusb_pollfds_handle_timeouts');
   late final _libusb_pollfds_handle_timeouts =
       _libusb_pollfds_handle_timeoutsPtr
           .asFunction<int Function(ffi.Pointer<libusb_context>)>();
@@ -1502,48 +1587,57 @@ class Libusb {
     ffi.Pointer<libusb_context> ctx,
     ffi.Pointer<pkg_libusb.Timeval> tv,
   ) {
-    return _libusb_get_next_timeout(
-      ctx,
-      tv,
-    );
+    return _libusb_get_next_timeout(ctx, tv);
   }
 
-  late final _libusb_get_next_timeoutPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<libusb_context>,
-              ffi.Pointer<pkg_libusb.Timeval>)>>('libusb_get_next_timeout');
-  late final _libusb_get_next_timeout = _libusb_get_next_timeoutPtr.asFunction<
-      int Function(
-          ffi.Pointer<libusb_context>, ffi.Pointer<pkg_libusb.Timeval>)>();
+  late final _libusb_get_next_timeoutPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Pointer<pkg_libusb.Timeval>,
+          )
+        >
+      >('libusb_get_next_timeout');
+  late final _libusb_get_next_timeout = _libusb_get_next_timeoutPtr
+      .asFunction<
+        int Function(
+          ffi.Pointer<libusb_context>,
+          ffi.Pointer<pkg_libusb.Timeval>,
+        )
+      >();
 
   ffi.Pointer<ffi.Pointer<libusb_pollfd>> libusb_get_pollfds(
     ffi.Pointer<libusb_context> ctx,
   ) {
-    return _libusb_get_pollfds(
-      ctx,
-    );
+    return _libusb_get_pollfds(ctx);
   }
 
-  late final _libusb_get_pollfdsPtr = _lookup<
-      ffi.NativeFunction<
+  late final _libusb_get_pollfdsPtr =
+      _lookup<
+        ffi.NativeFunction<
           ffi.Pointer<ffi.Pointer<libusb_pollfd>> Function(
-              ffi.Pointer<libusb_context>)>>('libusb_get_pollfds');
-  late final _libusb_get_pollfds = _libusb_get_pollfdsPtr.asFunction<
-      ffi.Pointer<ffi.Pointer<libusb_pollfd>> Function(
-          ffi.Pointer<libusb_context>)>();
+            ffi.Pointer<libusb_context>,
+          )
+        >
+      >('libusb_get_pollfds');
+  late final _libusb_get_pollfds = _libusb_get_pollfdsPtr
+      .asFunction<
+        ffi.Pointer<ffi.Pointer<libusb_pollfd>> Function(
+          ffi.Pointer<libusb_context>,
+        )
+      >();
 
-  void libusb_free_pollfds(
-    ffi.Pointer<ffi.Pointer<libusb_pollfd>> pollfds,
-  ) {
-    return _libusb_free_pollfds(
-      pollfds,
-    );
+  void libusb_free_pollfds(ffi.Pointer<ffi.Pointer<libusb_pollfd>> pollfds) {
+    return _libusb_free_pollfds(pollfds);
   }
 
-  late final _libusb_free_pollfdsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ffi.Pointer<libusb_pollfd>>)>>('libusb_free_pollfds');
+  late final _libusb_free_pollfdsPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<ffi.Pointer<libusb_pollfd>>)
+        >
+      >('libusb_free_pollfds');
   late final _libusb_free_pollfds = _libusb_free_pollfdsPtr
       .asFunction<void Function(ffi.Pointer<ffi.Pointer<libusb_pollfd>>)>();
 
@@ -1553,25 +1647,29 @@ class Libusb {
     libusb_pollfd_removed_cb removed_cb,
     ffi.Pointer<ffi.Void> user_data,
   ) {
-    return _libusb_set_pollfd_notifiers(
-      ctx,
-      added_cb,
-      removed_cb,
-      user_data,
-    );
+    return _libusb_set_pollfd_notifiers(ctx, added_cb, removed_cb, user_data);
   }
 
-  late final _libusb_set_pollfd_notifiersPtr = _lookup<
-      ffi.NativeFunction<
+  late final _libusb_set_pollfd_notifiersPtr =
+      _lookup<
+        ffi.NativeFunction<
           ffi.Void Function(
-              ffi.Pointer<libusb_context>,
-              libusb_pollfd_added_cb,
-              libusb_pollfd_removed_cb,
-              ffi.Pointer<ffi.Void>)>>('libusb_set_pollfd_notifiers');
-  late final _libusb_set_pollfd_notifiers =
-      _libusb_set_pollfd_notifiersPtr.asFunction<
-          void Function(ffi.Pointer<libusb_context>, libusb_pollfd_added_cb,
-              libusb_pollfd_removed_cb, ffi.Pointer<ffi.Void>)>();
+            ffi.Pointer<libusb_context>,
+            libusb_pollfd_added_cb,
+            libusb_pollfd_removed_cb,
+            ffi.Pointer<ffi.Void>,
+          )
+        >
+      >('libusb_set_pollfd_notifiers');
+  late final _libusb_set_pollfd_notifiers = _libusb_set_pollfd_notifiersPtr
+      .asFunction<
+        void Function(
+          ffi.Pointer<libusb_context>,
+          libusb_pollfd_added_cb,
+          libusb_pollfd_removed_cb,
+          ffi.Pointer<ffi.Void>,
+        )
+      >();
 
   /// \ingroup libusb_hotplug
   /// Register a hotplug callback function
@@ -1630,22 +1728,26 @@ class Libusb {
     );
   }
 
-  late final _libusb_hotplug_register_callbackPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(
-                  ffi.Pointer<libusb_context>,
-                  ffi.Int32,
-                  ffi.Int32,
-                  ffi.Int,
-                  ffi.Int,
-                  ffi.Int,
-                  libusb_hotplug_callback_fn,
-                  ffi.Pointer<ffi.Void>,
-                  ffi.Pointer<libusb_hotplug_callback_handle>)>>(
-      'libusb_hotplug_register_callback');
+  late final _libusb_hotplug_register_callbackPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(
+            ffi.Pointer<libusb_context>,
+            ffi.Int32,
+            ffi.Int32,
+            ffi.Int,
+            ffi.Int,
+            ffi.Int,
+            libusb_hotplug_callback_fn,
+            ffi.Pointer<ffi.Void>,
+            ffi.Pointer<libusb_hotplug_callback_handle>,
+          )
+        >
+      >('libusb_hotplug_register_callback');
   late final _libusb_hotplug_register_callback =
-      _libusb_hotplug_register_callbackPtr.asFunction<
-          int Function(
+      _libusb_hotplug_register_callbackPtr
+          .asFunction<
+            int Function(
               ffi.Pointer<libusb_context>,
               int,
               int,
@@ -1654,7 +1756,9 @@ class Libusb {
               int,
               libusb_hotplug_callback_fn,
               ffi.Pointer<ffi.Void>,
-              ffi.Pointer<libusb_hotplug_callback_handle>)>();
+              ffi.Pointer<libusb_hotplug_callback_handle>,
+            )
+          >();
 
   /// \ingroup libusb_hotplug
   /// Deregisters a hotplug callback.
@@ -1670,35 +1774,32 @@ class Libusb {
     ffi.Pointer<libusb_context> ctx,
     int callback_handle,
   ) {
-    return _libusb_hotplug_deregister_callback(
-      ctx,
-      callback_handle,
-    );
+    return _libusb_hotplug_deregister_callback(ctx, callback_handle);
   }
 
-  late final _libusb_hotplug_deregister_callbackPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<libusb_context>,
-                  libusb_hotplug_callback_handle)>>(
-      'libusb_hotplug_deregister_callback');
+  late final _libusb_hotplug_deregister_callbackPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Void Function(
+            ffi.Pointer<libusb_context>,
+            libusb_hotplug_callback_handle,
+          )
+        >
+      >('libusb_hotplug_deregister_callback');
   late final _libusb_hotplug_deregister_callback =
       _libusb_hotplug_deregister_callbackPtr
           .asFunction<void Function(ffi.Pointer<libusb_context>, int)>();
 
-  int libusb_set_option(
-    ffi.Pointer<libusb_context> ctx,
-    int option,
-  ) {
-    return _libusb_set_option(
-      ctx,
-      option,
-    );
+  int libusb_set_option(ffi.Pointer<libusb_context> ctx, int option) {
+    return _libusb_set_option(ctx, option);
   }
 
-  late final _libusb_set_optionPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<libusb_context>, ffi.Int32)>>('libusb_set_option');
+  late final _libusb_set_optionPtr =
+      _lookup<
+        ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<libusb_context>, ffi.Int32)
+        >
+      >('libusb_set_option');
   late final _libusb_set_option = _libusb_set_optionPtr
       .asFunction<int Function(ffi.Pointer<libusb_context>, int)>();
 }
@@ -1955,7 +2056,7 @@ abstract class libusb_iso_usage_type {
 /// A structure representing the standard USB device descriptor. This
 /// descriptor is documented in section 9.6.1 of the USB 3.0 specification.
 /// All multiple-byte fields are represented in host-endian format.
-class libusb_device_descriptor extends ffi.Struct {
+final class libusb_device_descriptor extends ffi.Struct {
   /// Size of this descriptor (in bytes)
   @ffi.Uint8()
   external int bLength;
@@ -2022,7 +2123,7 @@ class libusb_device_descriptor extends ffi.Struct {
 /// A structure representing the standard USB endpoint descriptor. This
 /// descriptor is documented in section 9.6.6 of the USB 3.0 specification.
 /// All multiple-byte fields are represented in host-endian format.
-class libusb_endpoint_descriptor extends ffi.Struct {
+final class libusb_endpoint_descriptor extends ffi.Struct {
   /// Size of this descriptor (in bytes)
   @ffi.Uint8()
   external int bLength;
@@ -2078,7 +2179,7 @@ class libusb_endpoint_descriptor extends ffi.Struct {
 /// A structure representing the standard USB interface descriptor. This
 /// descriptor is documented in section 9.6.5 of the USB 3.0 specification.
 /// All multiple-byte fields are represented in host-endian format.
-class libusb_interface_descriptor extends ffi.Struct {
+final class libusb_interface_descriptor extends ffi.Struct {
   /// Size of this descriptor (in bytes)
   @ffi.Uint8()
   external int bLength;
@@ -2135,7 +2236,7 @@ class libusb_interface_descriptor extends ffi.Struct {
 
 /// \ingroup libusb_desc
 /// A collection of alternate settings for a particular USB interface.
-class libusb_interface extends ffi.Struct {
+final class libusb_interface extends ffi.Struct {
   /// Array of interface descriptors. The length of this array is determined
   /// by the num_altsetting field.
   external ffi.Pointer<libusb_interface_descriptor> altsetting;
@@ -2150,7 +2251,7 @@ class libusb_interface extends ffi.Struct {
 /// A structure representing the standard USB configuration descriptor. This
 /// descriptor is documented in section 9.6.3 of the USB 3.0 specification.
 /// All multiple-byte fields are represented in host-endian format.
-class libusb_config_descriptor extends ffi.Struct {
+final class libusb_config_descriptor extends ffi.Struct {
   /// Size of this descriptor (in bytes)
   @ffi.Uint8()
   external int bLength;
@@ -2206,7 +2307,7 @@ class libusb_config_descriptor extends ffi.Struct {
 /// descriptor. This descriptor is documented in section 9.6.7 of
 /// the USB 3.0 specification. All multiple-byte fields are represented in
 /// host-endian format.
-class libusb_ss_endpoint_companion_descriptor extends ffi.Struct {
+final class libusb_ss_endpoint_companion_descriptor extends ffi.Struct {
   /// Size of this descriptor (in bytes)
   @ffi.Uint8()
   external int bLength;
@@ -2239,19 +2340,19 @@ class libusb_ss_endpoint_companion_descriptor extends ffi.Struct {
 /// A generic representation of a BOS Device Capability descriptor. It is
 /// advised to check bDevCapabilityType and call the matching
 /// libusb_get_*_descriptor function to get a structure fully matching the type.
-class libusb_bos_dev_capability_descriptor extends ffi.Opaque {}
+final class libusb_bos_dev_capability_descriptor extends ffi.Opaque {}
 
 /// \ingroup libusb_desc
 /// A structure representing the Binary Device Object Store (BOS) descriptor.
 /// This descriptor is documented in section 9.6.2 of the USB 3.0 specification.
 /// All multiple-byte fields are represented in host-endian format.
-class libusb_bos_descriptor extends ffi.Opaque {}
+final class libusb_bos_descriptor extends ffi.Opaque {}
 
 /// \ingroup libusb_desc
 /// A structure representing the USB 2.0 Extension descriptor
 /// This descriptor is documented in section 9.6.2.1 of the USB 3.0 specification.
 /// All multiple-byte fields are represented in host-endian format.
-class libusb_usb_2_0_extension_descriptor extends ffi.Struct {
+final class libusb_usb_2_0_extension_descriptor extends ffi.Struct {
   /// Size of this descriptor (in bytes)
   @ffi.Uint8()
   external int bLength;
@@ -2280,7 +2381,7 @@ class libusb_usb_2_0_extension_descriptor extends ffi.Struct {
 /// A structure representing the SuperSpeed USB Device Capability descriptor
 /// This descriptor is documented in section 9.6.2.2 of the USB 3.0 specification.
 /// All multiple-byte fields are represented in host-endian format.
-class libusb_ss_usb_device_capability_descriptor extends ffi.Struct {
+final class libusb_ss_usb_device_capability_descriptor extends ffi.Struct {
   /// Size of this descriptor (in bytes)
   @ffi.Uint8()
   external int bLength;
@@ -2329,7 +2430,7 @@ class libusb_ss_usb_device_capability_descriptor extends ffi.Struct {
 /// A structure representing the Container ID descriptor.
 /// This descriptor is documented in section 9.6.2.3 of the USB 3.0 specification.
 /// All multiple-byte fields, except UUIDs, are represented in host-endian format.
-class libusb_container_id_descriptor extends ffi.Struct {
+final class libusb_container_id_descriptor extends ffi.Struct {
   /// Size of this descriptor (in bytes)
   @ffi.Uint8()
   external int bLength;
@@ -2356,7 +2457,7 @@ class libusb_container_id_descriptor extends ffi.Struct {
 
 /// \ingroup libusb_asyncio
 /// Setup packet for control transfers.
-class libusb_control_setup extends ffi.Struct {
+final class libusb_control_setup extends ffi.Struct {
   /// Request type. Bits 0:4 determine recipient, see
   /// \ref libusb_request_recipient. Bits 5:6 determine type, see
   /// \ref libusb_request_type. Bit 7 determines data transfer direction, see
@@ -2386,15 +2487,15 @@ class libusb_control_setup extends ffi.Struct {
   external int wLength;
 }
 
-class libusb_context extends ffi.Opaque {}
+final class libusb_context extends ffi.Opaque {}
 
-class libusb_device extends ffi.Opaque {}
+final class libusb_device extends ffi.Opaque {}
 
-class libusb_device_handle extends ffi.Opaque {}
+final class libusb_device_handle extends ffi.Opaque {}
 
 /// \ingroup libusb_lib
 /// Structure providing the version of the libusb runtime
-class libusb_version extends ffi.Struct {
+final class libusb_version extends ffi.Struct {
   /// Library major version.
   @ffi.Uint16()
   external int major;
@@ -2613,7 +2714,7 @@ abstract class libusb_transfer_flags {
 
 /// \ingroup libusb_asyncio
 /// Isochronous packet descriptor.
-class libusb_iso_packet_descriptor extends ffi.Struct {
+final class libusb_iso_packet_descriptor extends ffi.Struct {
   /// Length of data to request in this packet
   @ffi.UnsignedInt()
   external int length;
@@ -2632,7 +2733,7 @@ class libusb_iso_packet_descriptor extends ffi.Struct {
 /// then submits it in order to request a transfer. After the transfer has
 /// completed, the library populates the transfer with the results and passes
 /// it back to the user.
-class libusb_transfer extends ffi.Opaque {}
+final class libusb_transfer extends ffi.Opaque {}
 
 /// \ingroup libusb_misc
 /// Capabilities supported by an instance of libusb on the current running
@@ -2689,14 +2790,20 @@ abstract class libusb_log_cb_mode {
 /// \param level the log level, see \ref libusb_log_level for a description
 /// \param str the log message
 /// \see libusb_set_log_cb()
-typedef libusb_log_cb = ffi.Pointer<
-    ffi.NativeFunction<
+typedef libusb_log_cb =
+    ffi.Pointer<
+      ffi.NativeFunction<
         ffi.Void Function(
-            ffi.Pointer<libusb_context>, ffi.Int32, ffi.Pointer<ffi.Char>)>>;
+          ffi.Pointer<libusb_context>,
+          ffi.Int32,
+          ffi.Pointer<ffi.Char>,
+        )
+      >
+    >;
 
 /// \ingroup libusb_poll
 /// File descriptor for polling
-class libusb_pollfd extends ffi.Struct {
+final class libusb_pollfd extends ffi.Struct {
   /// Numeric file descriptor
   @ffi.Int()
   external int fd;
@@ -2718,9 +2825,12 @@ class libusb_pollfd extends ffi.Struct {
 /// \param user_data User data pointer specified in
 /// libusb_set_pollfd_notifiers() call
 /// \see libusb_set_pollfd_notifiers()
-typedef libusb_pollfd_added_cb = ffi.Pointer<
-    ffi.NativeFunction<
-        ffi.Void Function(ffi.Int, ffi.Short, ffi.Pointer<ffi.Void>)>>;
+typedef libusb_pollfd_added_cb =
+    ffi.Pointer<
+      ffi.NativeFunction<
+        ffi.Void Function(ffi.Int, ffi.Short, ffi.Pointer<ffi.Void>)
+      >
+    >;
 
 /// \ingroup libusb_poll
 /// Callback function, invoked when a file descriptor should be removed from
@@ -2730,8 +2840,10 @@ typedef libusb_pollfd_added_cb = ffi.Pointer<
 /// \param user_data User data pointer specified in
 /// libusb_set_pollfd_notifiers() call
 /// \see libusb_set_pollfd_notifiers()
-typedef libusb_pollfd_removed_cb = ffi.Pointer<
-    ffi.NativeFunction<ffi.Void Function(ffi.Int, ffi.Pointer<ffi.Void>)>>;
+typedef libusb_pollfd_removed_cb =
+    ffi.Pointer<
+      ffi.NativeFunction<ffi.Void Function(ffi.Int, ffi.Pointer<ffi.Void>)>
+    >;
 
 /// \ingroup libusb_hotplug
 ///
@@ -2782,10 +2894,17 @@ abstract class libusb_hotplug_event {
 /// \param user_data      user data provided when this callback was registered
 /// \returns bool whether this callback is finished processing events.
 /// returning 1 will cause this callback to be deregistered
-typedef libusb_hotplug_callback_fn = ffi.Pointer<
-    ffi.NativeFunction<
-        ffi.Int Function(ffi.Pointer<libusb_context>,
-            ffi.Pointer<libusb_device>, ffi.Int32, ffi.Pointer<ffi.Void>)>>;
+typedef libusb_hotplug_callback_fn =
+    ffi.Pointer<
+      ffi.NativeFunction<
+        ffi.Int Function(
+          ffi.Pointer<libusb_context>,
+          ffi.Pointer<libusb_device>,
+          ffi.Int32,
+          ffi.Pointer<ffi.Void>,
+        )
+      >
+    >;
 
 /// \ingroup libusb_hotplug
 /// Callback handle.
