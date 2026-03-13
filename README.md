@@ -1,79 +1,57 @@
 # libusb
 
-Dart wrapper via `dart:ffi` for https://github.com/libusb/libusb
+Dart wrapper for [libusb](https://github.com/libusb/libusb) using `dart:ffi`.
 
-## Environment
+This package uses Flutter/Dart build hooks and code assets:
+- bindings are generated as `@Native` externals (`ffigen` `ffi-native` mode)
+- native library is built from libusb source on the consumer machine
+- no manual `DynamicLibrary.open(...)` is required by package users
 
-- Windows(10)
+## Supported targets
+
+- Android
+- Linux
 - macOS
-- Linux(Ubuntu 18.04 LTS)
+- Windows
 
-## Usage
+Out of scope:
+- iOS
+- Web (use app-level stubs/fallback package)
 
-Checkout example
+## Requirements
 
-## Features and bugs
+General:
+- Flutter 3.41+ (or compatible SDK with hooks/code assets)
+- Dart 3.11+
+- LLVM/Clang for running `ffigen`
 
-Please file feature requests and bugs at the [issue tracker][tracker].
+Build toolchain by target:
+- Linux: `make`, C compiler toolchain, autotools-compatible environment
+- macOS: Xcode Command Line Tools (`xcode-select --install`), `make`
+- Windows: MSBuild + Visual Studio C++ workload
+- Android: Android NDK (`ndk-build` available via env vars or `PATH`)
 
-[tracker]: http://example.com/issues/replaceme
+## Package behavior
 
-## Build
+`hook/build.dart` does the following:
+1. Downloads `libusb-1.0.29.tar.bz2` from the official release URL.
+2. Verifies SHA-256 checksum.
+3. Builds libusb for the current target.
+4. Registers the built library as a bundled code asset for
+   `package:libusb/libusb.dart`.
 
-### Prepare llvm(9+)
+## Regenerate bindings
 
-- Windows: `winget install -e --id LLVM.LLVM`
-- macOS: `brew install llvm`
-- Linux: `sudo apt install libclang-10-dev`
-
-### Build libusb_xxx.dart
-
-- Windows/Linux:
-
-```
-pub run ffigen
-move lib/libusb.dart lib/libusb64.dart
-```
-
-Refactor `timeval` to `timeval64`
-
-- macOS:
-
-```
-pub run ffigen
-mv lib/libusb.dart lib/libusb32.dart
+```bash
+flutter pub get
+flutter pub run ffigen
 ```
 
-Refactor `timeval` to `timeval32`
+Bindings are generated from `libusb-1.0/libusb.h` into `lib/src/libusb.ffigen.dart`.
 
-## Contribute
+## Development checks
 
-### Prepare libusb.h
-
-Download `xxx` verion from `https://github.com/libusb/libusb/releases` and extract `libusb.h`
-
-### Prepare libusb-1.0 dynamic library
-
-- Windows:
-
-Download `xxx` version from https://github.com/libusb/libusb/releases and extract
-
-```
-copy libusb-1.0.23\MS64\dll\libusb-1.0.dll libusb-1.0\
-```
-
-- macOS:
-
-Download `xxx` version from https://homebrew.bintray.com/bottles/libusb-1.0.23.catalina.bottle.tar.gz and extract
-
-```
-cp libusb/1.0.23/lib/libusb-1.0.dylib libusb-1.0/
-```
-
-- Linux:
-
-Download `xxx` version from http://old.kali.org/kali/pool/main/libu/libusb-1.0/ and install
-
-```
-cp /lib/x86_64-linux-gnu/libusb-1.0.so.0.xxx libusb-1.0/libusb-1.0.so
+```bash
+flutter analyze
+flutter test
 ```

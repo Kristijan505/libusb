@@ -37,7 +37,7 @@ final class Susecond extends AbiSpecificInteger {
   Abi.macosArm64: Int64(),
   Abi.macosX64: Int64(),
   Abi.windowsArm64: Int64(),
-  Abi.windowsIA32: Int16(),
+  Abi.windowsIA32: Int32(),
   Abi.windowsX64: Int64(),
 })
 final class Ssize extends AbiSpecificInteger {
