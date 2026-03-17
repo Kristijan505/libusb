@@ -25,10 +25,15 @@ Future<void> main(List<String> args) async {
     final targetOs = input.config.code.targetOS;
     final targetArchitecture = input.config.code.targetArchitecture;
     if (!isSupportedTarget(targetOs, targetArchitecture)) {
-      throw UnsupportedError(
-        'Unsupported target: $targetOs/$targetArchitecture. '
-        'Supported targets are Android, Linux, macOS, Windows.',
+      // This package can exist transitively in apps that also target
+      // unsupported platforms (for example iOS). In that case we skip
+      // producing a native asset instead of failing the whole app build.
+      stdout.writeln(
+        '[libusb hook] Skipping native asset build for unsupported target '
+        '$targetOs/$targetArchitecture. Supported targets are Android, '
+        'Linux, macOS, Windows.',
       );
+      return;
     }
 
     final sourceDir = await _prepareSourceTree(input, output);
