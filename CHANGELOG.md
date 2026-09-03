@@ -1,3 +1,14 @@
+## 1.1.0
+
+- Bumped `code_assets` to `^2.0.0` and `hooks` to `^2.2.0`.
+- `code_assets` 2.0.0 overrode `==`/`hashCode` on `OS`, `Architecture` and
+  `Sanitizer` to support custom targets, so those objects can no longer be
+  elements of a `const` set. `supportedTargetOs` is now a `final` set, the
+  migration the package prescribes.
+- Unblocks the native-assets cluster downstream: pinning `code_assets`/`hooks`
+  at `1.x` also held back `native_toolchain_c`, `objective_c` and `record_use`
+  in apps that depend on this package.
+
 ## 1.0.0
 
 - **BREAKING**: Migrated bindings to `@Native` (`ffigen` `ffi-native` mode).

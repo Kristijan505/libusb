@@ -1,6 +1,10 @@
 import 'package:code_assets/code_assets.dart';
 
-const Set<OS> supportedTargetOs = <OS>{
+/// `code_assets` 2.0.0 je nadjacao `==` i `hashCode` na `OS`, `Architecture` i
+/// `Sanitizer` radi podrske za prilagodene ciljeve, pa se ti objekti vise ne
+/// mogu koristiti kao elementi `const` skupa ni kljucevi `const` mape.
+/// Migracija koju paket propisuje: koristiti `final` (runtime) skup.
+final Set<OS> supportedTargetOs = <OS>{
   OS.android,
   OS.linux,
   OS.macOS,
